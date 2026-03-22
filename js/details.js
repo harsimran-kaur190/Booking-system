@@ -14,7 +14,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Dynamic movie details
   const params = new URLSearchParams(window.location.search);
-  const movieId = params.get("id");
+  let movieId = params.get("id");
+
+  // Fallback to Inception if accessed without an ID (e.g., from the navbar or old links)
+  if (!movieId && !window.location.search.includes("id=")) {
+      movieId = "27205"; 
+  }
 
   if (movieId) {
     const movie = await fetchMovieDetails(movieId);
@@ -56,6 +61,35 @@ document.addEventListener("DOMContentLoaded", async function () {
         `;
         heroEl.style.backgroundSize = "cover";
         heroEl.style.backgroundPosition = "center";
+      }
+
+      // Wishlist logic
+      const wishlistBtn = document.getElementById("wishlistBtn");
+      if (wishlistBtn) {
+        const wishlist = Storage.getWishlist();
+        const isAdded = wishlist.some(m => String(m.id) === String(movie.id));
+        
+        if (isAdded) {
+          wishlistBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i> Added to Wishlist';
+          wishlistBtn.classList.replace("btn-outline-info", "btn-info");
+        }
+
+        wishlistBtn.addEventListener("click", () => {
+          const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
+          const genres = movie.genres && movie.genres.length ? movie.genres.map(g => g.name).join(", ") : "N/A";
+          const poster = movie.poster_path ? `${CONFIG.IMAGE_URL}${movie.poster_path}` : "https://via.placeholder.com/300x450?text=No+Image";
+
+          Storage.saveToWishlist({
+            id: String(movie.id),
+            title: movie.title,
+            poster: poster,
+            genre: genres,
+            year: year
+          });
+
+          wishlistBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i> Added to Wishlist';
+          wishlistBtn.classList.replace("btn-outline-info", "btn-info");
+        });
       }
     }
   }

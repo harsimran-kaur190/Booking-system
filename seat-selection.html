@@ -6,61 +6,17 @@
     <title>Seat Selection - CinePass</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="seat.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        /* This makes the background look like a dark cinema hall instead of a flat grey */
-body {
-    background: radial-gradient(circle at center, #111b21 0%, #05080a 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* This wraps your seats in a subtle "Box" to make the layout feel intentional */
-.theater-layout {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 40px;
-    padding: 50px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    margin: 20px auto; /* Centers it and adds breathing room */
-}
-        body {
-            background-color: var(--deep-dark);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            padding-top: 100px; /* Space for fixed navbar */
-            padding-bottom: 120px;
+        /* Small necessary utility overrides that don't belong in seat.css */
+        body { padding-top: 100px; }
+        .legend-container {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .theater-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    min-height: auto; /* Prevents stretching */
-}
-
-/* Ensure the grid container doesn't have huge bottom margins */
-.grid-container {
-    margin-bottom: 30px; 
-}
-
-/* Adjust the main container to prevent extra scrolling space */
-.container.py-4 {
-    padding-bottom: 20px !important; 
-}
-        /* Navbar Theme Match */
-        .navbar {
-            background: linear-gradient(to bottom, rgba(15, 23, 30, 0.9), rgba(15, 23, 30, 0));
-            transition: 0.4s;
-            z-index: 2000;
-        }
-
-        .navbar.scrolled {
-            background: var(--bg-dark) !important;
-            border-bottom: 1px solid #222;
-        }
-        /* Cinema Screen with Neon Glow */ 
     </style>
 </head>
 <body>
@@ -70,23 +26,23 @@ body {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="details.html">Movies</a></li>
+                <li class="nav-item"><a class="nav-link active" href="details.html?id=27205">Movies</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="container py-4">
         <div class="text-center">
-            <h1 class="display-5 fw-bold text-uppercase tracking-tighter">INCEPTION</h1>
+            <h1 class="movie-title text-uppercase">INCEPTION</h1>
             <p class="text-info opacity-75">Grand Cinema | Screen 4 | 05:00 PM</p>
         </div>
 
-        <div class="screen-container">
-            <div class="screen-curve"></div>
-            <p class="mt-3 small text-uppercase text-secondary" style="letter-spacing: 5px;">Screen This Way</p>
+        <div class="screen-wrapper text-center">
+            <div class="screen-glow"></div>
+            <p class="screen-label">SCREEN THIS WAY</p>
         </div>
 
-        <div class="d-flex justify-content-center gap-4">
+        <div class="d-flex justify-content-center gap-4 mb-5">
             <div class="legend-container d-flex gap-4 shadow">
                 <div class="d-flex align-items-center gap-2">
                     <div class="seat available"></div> <span class="small">Available</span>
@@ -100,34 +56,40 @@ body {
             </div>
         </div>
 
-        <div class="theater-layout d-flex flex-column align-items-center mt-4">
-            <script>
-                const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-                rows.forEach(rowLetter => {
-                    document.write('<div class="d-flex align-items-center mb-1">');
-                    document.write(`<div class="row-label">${rowLetter}</div>`);
-                    for(let i=1; i<=10; i++) {
-                        let status = (Math.random() > 0.85) ? 'occupied' : 'available';
-                        if(i === 6) document.write('<div class="aisle"></div>');
-                        document.write(`<div class="seat ${status}" data-row="${rowLetter}" data-seat="${i}"></div>`);
-                    }
-                    document.write('</div>');
-                });
-            </script>
+        <div class="text-center">
+            <div class="theater-container">
+                <script>
+                    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                    rows.forEach((rowLetter, rowIndex) => {
+                        document.write('<div class="seat-row">');
+                        document.write(`<div class="row-label">${rowLetter}</div>`);
+                        for(let i=1; i<=10; i++) {
+                            let status = (Math.random() > 0.85) ? 'occupied' : 'available';
+                            if(i === 6) document.write('<div class="aisle"></div>');
+                            
+                            // Visual flair for back couple of rows
+                            let vipClass = (rowIndex >= 8) ? ' vip-border' : '';
+                            
+                            document.write(`<div class="seat ${status}${vipClass}" data-row="${rowLetter}" data-seat="${i}">${status === 'occupied' ? '' : i}</div>`);
+                        }
+                        document.write('</div>');
+                    });
+                </script>
+            </div>
         </div>
     </div>
 
     <div class="booking-bar">
         <div class="container d-flex justify-content-between align-items-center">
             <div>
-                <h6 class="text-secondary small mb-1 text-uppercase">Subtotal</h6>
-                <h3 class="fw-bold text-white mb-0">$<span id="price-display">0.00</span></h3>
+                <span class="label">SUBTOTAL</span>
+                <h3 class="amount text-white mb-0">$<span id="price-display">0.00</span></h3>
             </div>
             <div class="text-center">
-                <h6 class="text-secondary small mb-1 text-uppercase">Seats</h6>
-                <h4 class="text-info mb-0" id="seat-display">None Selected</h4>
+                <span class="label">SEATS</span>
+                <h4 class="text-info amount mb-0" id="seat-display" style="font-size: 1.2rem;">None Selected</h4>
             </div>
-            <button class="btn btn-payment btn-lg px-5 py-3 shadow">
+            <button class="btn-pay shadow">
                 PAYMENT →
             </button>
         </div>
@@ -138,17 +100,50 @@ body {
         window.addEventListener('scroll', function () {
             const nav = document.querySelector('.navbar');
             if (window.scrollY > 20) {
-                nav.classList.add('scrolled');
+                nav.style.background = '#05080a';
+                nav.style.borderBottom = '1px solid #222';
             } else {
-                nav.classList.remove('scrolled');
+                nav.style.background = 'linear-gradient(to bottom, rgba(15, 23, 30, 0.9), rgba(15, 23, 30, 0))';
+                nav.style.borderBottom = 'none';
             }
         });
 
-        // Simple Visual Logic (No complex math, just UI toggling)
+        // Dynamic Seat Selection Logic
+        const seatPrice = 15.00; // Fixed price per seat
+        let selectedSeatsCount = 0;
+        let selectedSeatNumbers = [];
+
+        const updateBookingBar = () => {
+            const priceDisplay = document.getElementById('price-display');
+            const seatDisplay = document.getElementById('seat-display');
+            
+            priceDisplay.textContent = (selectedSeatsCount * seatPrice).toFixed(2);
+            
+            if (selectedSeatsCount === 0) {
+                seatDisplay.textContent = 'None Selected';
+            } else {
+                seatDisplay.textContent = selectedSeatNumbers.join(', ');
+            }
+        };
+
         document.querySelectorAll('.seat.available').forEach(seat => {
             seat.addEventListener('click', () => {
+                const row = seat.getAttribute('data-row');
+                const seatNum = seat.getAttribute('data-seat');
+                const seatId = `${row}${seatNum}`;
+
                 seat.classList.toggle('selected');
                 seat.classList.toggle('available');
+
+                // If it became selected (so it now has 'selected' class)
+                if (seat.classList.contains('selected')) {
+                    selectedSeatsCount++;
+                    selectedSeatNumbers.push(seatId);
+                } else {
+                    selectedSeatsCount--;
+                    selectedSeatNumbers = selectedSeatNumbers.filter(id => id !== seatId);
+                }
+                updateBookingBar();
             });
         });
     </script>
