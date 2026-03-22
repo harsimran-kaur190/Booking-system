@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePass | Theatres</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+
+  <style>
+    body {
+      background-color: #0b0f14;
+      color: white;
+    }
+
+    .navbar {
+      background: #05080a;
+    }
+
+    .hero {
+      padding: 120px 0 50px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-weight: 700;
+    }
+
+    .map-box {
+  height: 350px;
+  background: #111827;
+  border-radius: 15px;
+  overflow: hidden;
+  }
+
+    .card {
+      background: #111827;
+      border: none;
+      border-radius: 15px;
+    }
+
+    .tag {
+      font-size: 12px;
+      background: #0dcaf0;
+      color: black;
+      padding: 3px 8px;
+      border-radius: 10px;
+      margin-right: 5px;
+    }
+    #map {
+    height: 350px;
+    width: 100%;
+    border-radius: 15px;
+    }
+  </style>
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark fixed-top px-4">
+  <a class="navbar-brand fw-bold fs-4" href="index.html">
+    Cine<span class="text-info">Pass</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Find Theatres Near You 🎬</h1>
+    <p class="text-secondary">Simple, fast and cute experience</p>
+  </div>
+</section>
+
+<!-- MAP -->
+
+<div class="container mb-5">
+  <h5 class="mb-3">Map View</h5>
+  <div id="map" style="height: 350px; width: 100%; border-radius: 15px;"></div>
+</div>
+
+<!-- THEATRES -->
+<div class="container mb-5">
+  <h5 class="mb-3">Popular Theatres</h5>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h6>PVR Elante</h6>
+        <p class="text-secondary small">Chandigarh</p>
+        <div>
+          <span class="tag">IMAX</span>
+          <span class="tag">Recliner</span>
+        </div>
+        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h6>Cinepolis</h6>
+        <p class="text-secondary small">Mohali</p>
+        <div>
+          <span class="tag">Dolby</span>
+          <span class="tag">Snacks</span>
+        </div>
+        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h6>Wave Cinemas</h6>
+        <p class="text-secondary small">Zirakpur</p>
+        <div>
+          <span class="tag">Luxury</span>
+          <span class="tag">Parking</span>
+        </div>
+        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT TAGS -->
+ 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/theatres.js"></script>
+
+</body>
+</html>

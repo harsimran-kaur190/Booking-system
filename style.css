@@ -64,6 +64,7 @@ body {
     bottom: 20%;
     text-align: left;
     left: 5%;
+    z-index: 20; /* Prevents the invisible left carousel-control from capturing clicks */
 }
 
 /* Movie Row - The Horizontal Scroll */
@@ -373,6 +374,7 @@ body {
     border-radius: 30px;
     padding: 50px 40px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    scroll-margin-top: 80px;
 }
 
 /* Date Items */
