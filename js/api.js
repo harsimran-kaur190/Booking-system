@@ -29,3 +29,9 @@ async function fetchMovieDetails(movieId) {
 async function fetchActionMovies() {
   return await getData(`/discover/movie?with_genres=28&language=${CONFIG.LANGUAGE}`);
 }
+async function fetchMovieExtras(movieId) {
+  const res = await fetch(
+    `${CONFIG.BASE_URL}/movie/${movieId}?api_key=${CONFIG.API_KEY}&append_to_response=videos,credits`
+  );
+  return res.json();
+}

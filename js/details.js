@@ -25,6 +25,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     const movie = await fetchMovieDetails(movieId);
 
     if (movie) {
+      const data = await fetchMovieExtras(movieId);
+      const trailerEl = document.getElementById("movie-trailer");
+
+    if (trailerEl && data.videos?.results) {
+      const trailer = data.videos.results.find(
+        v => v.type === "Trailer" && v.site === "YouTube"
+      );
+
+      if (trailer) {
+        trailerEl.src = `https://www.youtube.com/embed/${trailer.key}`;
+      }
+    }
+
+    const castContainer = document.getElementById("cast-container");
+
+    if (castContainer && data.credits?.cast) {
+      castContainer.innerHTML = data.credits.cast.slice(0, 8).map(actor => {
+        const img = actor.profile_path
+          ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+          : "https://via.placeholder.com/100";
+
+        return `
+          <div class="col-6 col-md-3 col-lg-2 text-center">
+            <img src="${img}" class="rounded-circle mb-2"
+                style="width: 100px; height: 100px; object-fit: cover;">
+            <p class="fw-bold mb-0 small">${actor.name}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
       const titleEl = document.getElementById("movie-title");
       const overviewEl = document.getElementById("movie-overview");
       const metaEl = document.getElementById("movie-meta");
