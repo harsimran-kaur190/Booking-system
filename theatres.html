@@ -8,128 +8,243 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-dark: #05080a;
+      --card-bg: #111827;
+      --accent-info: #0dcaf0;
+      --text-muted: #9ca3af;
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
     body {
-      background-color: #0b0f14;
+      background-color: var(--bg-dark);
       color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
+    /* NAVBAR */
     .navbar {
-      background: #05080a;
+      background: rgba(5, 8, 10, 0.8) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 15px 0;
     }
 
+    /* HERO */
     .hero {
-      padding: 120px 0 50px;
+      padding: 140px 0 60px;
       text-align: center;
+      background: radial-gradient(circle at top, rgba(13, 202, 240, 0.15) 0%, transparent 60%);
     }
 
     .hero h1 {
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 3rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
     }
 
-    .map-box {
-  height: 350px;
-  background: #111827;
-  border-radius: 15px;
-  overflow: hidden;
-  }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
 
-    .card {
-      background: #111827;
-      border: none;
-      border-radius: 15px;
+    /* SECTION TITLES */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .section-header h5 {
+      font-weight: 700;
+      margin-bottom: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header::after {
+      content: "";
+      height: 1px;
+      flex-grow: 1;
+      background: linear-gradient(90deg, var(--glass-border), transparent);
+    }
+
+    /* MAP BOX */
+    #map {
+      height: 380px;
+      width: 100%;
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* THEATRE CARDS */
+    .theatre-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
+      padding: 24px;
+      height: 100%;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .theatre-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(13, 202, 240, 0.5);
+      background: #161e2e;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(13, 202, 240, 0.1);
+    }
+
+    .theatre-card h6 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .location-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* PILL TAGS */
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 25px;
     }
 
     .tag {
-      font-size: 12px;
-      background: #0dcaf0;
-      color: black;
-      padding: 3px 8px;
-      border-radius: 10px;
-      margin-right: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(13, 202, 240, 0.1);
+      color: var(--accent-info);
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(13, 202, 240, 0.2);
     }
-    #map {
-    height: 350px;
-    width: 100%;
-    border-radius: 15px;
+
+    /* ACTION BUTTON */
+    .btn-book {
+      background: var(--accent-info);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      width: 100%;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
     }
+
+    .btn-book:hover {
+      background: white;
+      color: #000;
+      transform: scale(1.02);
+    }
+
+    /* CUSTOM SCROLLBAR (Optional) */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #333; }
   </style>
 </head>
 
-
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-dark fixed-top px-4">
-  <a class="navbar-brand fw-bold fs-4" href="index.html">
-    Cine<span class="text-info">Pass</span>
-  </a>
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-4" href="index.html">
+      Cine<span class="text-info">Pass</span>
+    </a>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
     <h1>Find Theatres Near You 🎬</h1>
-    <p class="text-secondary">Simple, fast and cute experience</p>
+    <p>Discover premium screens and comfort in your city</p>
   </div>
 </section>
 
-<!-- MAP -->
-
 <div class="container mb-5">
-  <h5 class="mb-3">Map View</h5>
-  <div id="map" style="height: 350px; width: 100%; border-radius: 15px;"></div>
+  <div class="section-header">
+    <h5><i class="bi bi-map-fill text-info me-2"></i>Map View</h5>
+  </div>
+  <div id="map"></div>
 </div>
 
-<!-- THEATRES -->
-<div class="container mb-5">
-  <h5 class="mb-3">Popular Theatres</h5>
+<div class="container mb-5 pb-5">
+  <div class="section-header">
+    <h5><i class="bi bi-fire text-info me-2"></i>Popular Theatres</h5>
+  </div>
 
-  <div class="row g-3">
+  <div class="row g-4">
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>PVR Elante</h6>
-        <p class="text-secondary small">Chandigarh</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">IMAX</span>
-          <span class="tag">Recliner</span>
+          <h6>PVR Elante</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Chandigarh</p>
+          <div class="tag-group">
+            <span class="tag">IMAX 3D</span>
+            <span class="tag">Recliner</span>
+            <span class="tag">Dolby 7.1</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>Cinepolis</h6>
-        <p class="text-secondary small">Mohali</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">Dolby</span>
-          <span class="tag">Snacks</span>
+          <h6>Cinepolis</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Mohali</p>
+          <div class="tag-group">
+            <span class="tag">Macro XE</span>
+            <span class="tag">Snacks Bar</span>
+            <span class="tag">4K Laser</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>Wave Cinemas</h6>
-        <p class="text-secondary small">Zirakpur</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">Luxury</span>
-          <span class="tag">Parking</span>
+          <h6>Wave Cinemas</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Zirakpur</p>
+          <div class="tag-group">
+            <span class="tag">Luxury</span>
+            <span class="tag">Parking</span>
+            <span class="tag">Dolby Atmos</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- SCRIPT TAGS -->
- 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="js/theatres.js"></script>
 

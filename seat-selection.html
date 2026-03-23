@@ -3,149 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seat Selection - CinePass</title>
+    <title>CinePass | Luxury Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="seat.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Small necessary utility overrides that don't belong in seat.css */
-        body { padding-top: 100px; }
-        .legend-container {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 15px 30px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-    </style>
 </head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top px-4">
-        <a class="navbar-brand fw-bold fs-3" href="index.html">Cine<span class="text-info">Pass</span></a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="details.html?id=27205">Movies</a></li>
-            </ul>
+<body class="dark-theme">
+    
+    <nav class="navbar navbar-expand-lg fixed-top px-4">
+        <a class="navbar-brand fw-bold fs-3" href="#">Cine<span class="text-info">Pass</span></a>
+        <div class="ms-auto d-flex align-items-center">
+            <span class="me-2 small opacity-75"><i class="bi bi-sun-fill"></i></span>
+            <div class="form-check form-switch theme-switch">
+                <input class="form-check-input" type="checkbox" id="themeToggle" checked>
+            </div>
+            <span class="ms-1 small opacity-75"><i class="bi bi-moon-stars-fill"></i></span>
         </div>
     </nav>
 
-    <div class="container py-4">
-        <div class="text-center">
-            <h1 class="movie-title text-uppercase">INCEPTION</h1>
-            <p class="text-info opacity-75">Grand Cinema | Screen 4 | 05:00 PM</p>
+    <div class="container seat-page-wrapper">
+        <div class="text-center mb-4">
+            <h1 class="movie-title fw-bold">INCEPTION</h1>
+            <p class="subtitle text-uppercase opacity-50">Standard Rows (A-J) • Luxury Recliners (K-L)</p>
         </div>
 
-        <div class="screen-wrapper text-center">
+        <div class="screen-container">
             <div class="screen-glow"></div>
-            <p class="screen-label">SCREEN THIS WAY</p>
+            <p class="screen-label mt-2">SCREEN THIS WAY</p>
         </div>
 
-        <div class="d-flex justify-content-center gap-4 mb-5">
-            <div class="legend-container d-flex gap-4 shadow">
-                <div class="d-flex align-items-center gap-2">
-                    <div class="seat available"></div> <span class="small">Available</span>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <div class="seat selected"></div> <span class="small">Selected</span>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <div class="seat occupied"></div> <span class="small">Occupied</span>
-                </div>
-            </div>
+        <div class="legend-box d-flex justify-content-center gap-4 mb-5 shadow-sm">
+            <div class="legend-item"><div class="seat available"></div><span>Available</span></div>
+            <div class="legend-item"><div class="seat selected"></div><span>Selected</span></div>
+            <div class="legend-item"><div class="seat occupied"></div><span>Sold Out</span></div>
+            <div class="legend-item"><div class="seat available vip-border"></div><span>VIP Recliner</span></div>
         </div>
 
-        <div class="text-center">
-            <div class="theater-container">
-                <script>
-                    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-                    rows.forEach((rowLetter, rowIndex) => {
-                        document.write('<div class="seat-row">');
-                        document.write(`<div class="row-label">${rowLetter}</div>`);
-                        for(let i=1; i<=10; i++) {
-                            let status = (Math.random() > 0.85) ? 'occupied' : 'available';
-                            if(i === 6) document.write('<div class="aisle"></div>');
-                            
-                            // Visual flair for back couple of rows
-                            let vipClass = (rowIndex >= 8) ? ' vip-border' : '';
-                            
-                            document.write(`<div class="seat ${status}${vipClass}" data-row="${rowLetter}" data-seat="${i}">${status === 'occupied' ? '' : i}</div>`);
-                        }
-                        document.write('</div>');
-                    });
-                </script>
-            </div>
+        <div class="theater-wrapper">
+            <div id="seat-container" class="theater-grid">
+                </div>
         </div>
     </div>
 
     <div class="booking-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <span class="label">SUBTOTAL</span>
-                <h3 class="amount text-white mb-0">$<span id="price-display">0.00</span></h3>
+        <div class="container booking-grid">
+            <div class="price-section">
+                <span class="label small opacity-75">SUBTOTAL</span>
+                <h3 class="amount mb-0 fw-bold">$<span id="total-price">0.00</span></h3>
             </div>
-            <div class="text-center">
-                <span class="label">SEATS</span>
-                <h4 class="text-info amount mb-0" id="seat-display" style="font-size: 1.2rem;">None Selected</h4>
+
+            <div class="selected-info text-center">
+                <span class="label small opacity-75 d-block">SELECTED SEATS</span>
+                <div id="selected-seats-list" class="fw-bold">None</div>
             </div>
-            <button class="btn-pay shadow">
-                PAYMENT →
-            </button>
+
+            <div class="action-section text-end">
+                <button class="btn btn-info btn-pay px-5 py-3 fw-bold shadow">
+                    BOOK TICKETS <i class="bi bi-ticket-perforated ms-2"></i>
+                </button>
+            </div>
         </div>
     </div>
-
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function () {
-            const nav = document.querySelector('.navbar');
-            if (window.scrollY > 20) {
-                nav.style.background = '#05080a';
-                nav.style.borderBottom = '1px solid #222';
-            } else {
-                nav.style.background = 'linear-gradient(to bottom, rgba(15, 23, 30, 0.9), rgba(15, 23, 30, 0))';
-                nav.style.borderBottom = 'none';
-            }
-        });
-
-        // Dynamic Seat Selection Logic
-        const seatPrice = 15.00; // Fixed price per seat
-        let selectedSeatsCount = 0;
-        let selectedSeatNumbers = [];
-
-        const updateBookingBar = () => {
-            const priceDisplay = document.getElementById('price-display');
-            const seatDisplay = document.getElementById('seat-display');
-            
-            priceDisplay.textContent = (selectedSeatsCount * seatPrice).toFixed(2);
-            
-            if (selectedSeatsCount === 0) {
-                seatDisplay.textContent = 'None Selected';
-            } else {
-                seatDisplay.textContent = selectedSeatNumbers.join(', ');
-            }
-        };
-
-        document.querySelectorAll('.seat.available').forEach(seat => {
-            seat.addEventListener('click', () => {
-                const row = seat.getAttribute('data-row');
-                const seatNum = seat.getAttribute('data-seat');
-                const seatId = `${row}${seatNum}`;
-
-                seat.classList.toggle('selected');
-                seat.classList.toggle('available');
-
-                // If it became selected (so it now has 'selected' class)
-                if (seat.classList.contains('selected')) {
-                    selectedSeatsCount++;
-                    selectedSeatNumbers.push(seatId);
-                } else {
-                    selectedSeatsCount--;
-                    selectedSeatNumbers = selectedSeatNumbers.filter(id => id !== seatId);
-                }
-                updateBookingBar();
-            });
-        });
-    </script>
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-info shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">ORDER CONFIRMED</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="opacity-75">Movie:</span>
+                    <span class="fw-bold text-info">INCEPTION</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="opacity-75">Selected Seats:</span>
+                    <span id="modal-seats" class="fw-bold text-info">-</span>
+                </div>
+                <hr class="opacity-25">
+                <div class="d-flex justify-content-between fs-4">
+                    <span class="fw-bold">Total:</span>
+                    <span class="fw-bold text-info">$<span id="modal-total">0.00</span></span>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-light w-100 py-3 fw-bold" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-info w-100 py-3 fw-bold shadow" onclick="confirmPurchase()">CONFIRM</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
