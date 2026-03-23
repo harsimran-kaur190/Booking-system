@@ -18,12 +18,18 @@
   document.addEventListener("DOMContentLoaded", async function () {
     const popularData = await fetchPopularMovies();
     if (popularData && popularData.results) {
+      
       renderMovies("trending-movies", popularData.results.slice(0, 6));
     }
 
     const upcomingData = await fetchUpcomingMovies();
     if (upcomingData && upcomingData.results) {
       renderMovies("upcoming-movies", upcomingData.results.slice(0, 6));
+    }
+
+    const actionData = await fetchActionMovies();
+    if (actionData && actionData.results) {
+      renderMovies("action-movies", actionData.results.slice(7, 13));
     }
   });
 </script>
@@ -108,20 +114,7 @@
     <div id="trending-movies" class="movie-row mb-5"></div>
 
         <h4 class="section-title fw-bold mb-4">Action & Adventure</h4>
-        <div class="movie-row">
-            <div class="movie-card text-center">
-                <img src="https://upload.wikimedia.org/wikipedia/en/9/98/John_Wick_TeaserPoster.jpg" class="img-fluid rounded shadow" style="height: 350px;">
-                <p class="mt-2 mb-0 small fw-bold">John Wick</p>
-            </div>
-            <div class="movie-card text-center">
-                <img src="https://rovrmovies.com/wp-content/uploads/2024/02/mad-max.jpg" class="img-fluid rounded shadow" style="height: 350px;">
-                <p class="mt-2 mb-0 small fw-bold">Mad Max: Fury Road</p>
-            </div>
-            <div class="movie-card text-center">
-                <img src="https://m.media-amazon.com/images/I/61dcMsYIAJL._AC_UF894,1000_QL80_.jpg" class="img-fluid rounded shadow" style="height: 350px;">
-                <p class="mt-2 mb-0 small fw-bold">Gladiator</p>
-            </div>
-        </div>
+        <div id="action-movies" class="movie-row"></div>
     </div>
 
         <div class="container-fluid py-5 px-4 bg-dark">

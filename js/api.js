@@ -26,3 +26,6 @@ async function fetchUpcomingMovies() {
 async function fetchMovieDetails(movieId) {
   return await getData(`/movie/${movieId}?language=${CONFIG.LANGUAGE}`);
 }
+async function fetchActionMovies() {
+  return await getData(`/discover/movie?with_genres=28&language=${CONFIG.LANGUAGE}`);
+}
