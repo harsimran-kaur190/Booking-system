@@ -10,20 +10,31 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
+    :root {
+      --bg-dark: #05080a;
+      --card-bg: #111827;
+      --accent-info: #0dcaf0;
+      --text-muted: #9ca3af;
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
     body {
       background-color: #000 !important;
       color: white;
       font-family: 'Inter', sans-serif;
     }
 
+    /* NAVBAR */
     .navbar {
       background: rgba(0, 0, 0, 0.9);
       backdrop-filter: blur(8px);
     }
 
+    /* HERO */
     .hero {
       padding: 120px 0 60px;
       text-align: center;
+      background: radial-gradient(circle at top, rgba(13, 202, 240, 0.15) 0%, transparent 60%);
     }
 
     .hero h1 {
@@ -79,23 +90,35 @@
       background: #0dcaf0;
       margin-top: 6px;
     }
+
+    .btn-book:hover {
+      background: white;
+      color: #000;
+      transform: scale(1.02);
+    }
+
+    /* CUSTOM SCROLLBAR (Optional) */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #333; }
   </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-dark fixed-top px-4">
-  <a class="navbar-brand fw-bold fs-4" href="index.html">
-    Cine<span class="text-info">Pass</span>
-  </a>
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-4" href="index.html">
+      Cine<span class="text-info">Pass</span>
+    </a>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
     <h1>Find Theatres Near You 🎬</h1>
-    <p class="text-secondary">Simple, fast and cute experience</p>
+    <p>Discover premium screens and comfort in your city</p>
   </div>
 </section>
 
@@ -105,45 +128,55 @@
   <div id="map"></div>
 </div>
 
-<!-- THEATRES -->
-<div class="container mb-5">
-  <h5 class="mb-3">Popular Theatres</h5>
+<div class="container mb-5 pb-5">
+  <div class="section-header">
+    <h5><i class="bi bi-fire text-info me-2"></i>Popular Theatres</h5>
+  </div>
 
-  <div class="row g-3">
+  <div class="row g-4">
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>PVR Elante</h6>
-        <p class="text-secondary small">Chandigarh</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">IMAX</span>
-          <span class="tag">Recliner</span>
+          <h6>PVR Elante</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Chandigarh</p>
+          <div class="tag-group">
+            <span class="tag">IMAX 3D</span>
+            <span class="tag">Recliner</span>
+            <span class="tag">Dolby 7.1</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>Cinepolis</h6>
-        <p class="text-secondary small">Mohali</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">Dolby</span>
-          <span class="tag">Snacks</span>
+          <h6>Cinepolis</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Mohali</p>
+          <div class="tag-group">
+            <span class="tag">Macro XE</span>
+            <span class="tag">Snacks Bar</span>
+            <span class="tag">4K Laser</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="card p-3">
-        <h6>Wave Cinemas</h6>
-        <p class="text-secondary small">Zirakpur</p>
+      <div class="theatre-card">
         <div>
-          <span class="tag">Luxury</span>
-          <span class="tag">Parking</span>
+          <h6>Wave Cinemas</h6>
+          <p class="location-label"><i class="bi bi-geo-alt"></i> Zirakpur</p>
+          <div class="tag-group">
+            <span class="tag">Luxury</span>
+            <span class="tag">Parking</span>
+            <span class="tag">Dolby Atmos</span>
+          </div>
         </div>
-        <a href="details.html" class="btn btn-info btn-sm mt-3">Book</a>
+        <a href="details.html" class="btn btn-book">Book Tickets</a>
       </div>
     </div>
 

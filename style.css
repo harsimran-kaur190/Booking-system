@@ -505,3 +505,131 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     margin-top: 20px; /* Space between text and footer */
 }
+
+
+/* 1. Hero Section Adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 60vh; /* Shorter on mobile */
+        padding-bottom: 30px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem; /* Smaller title */
+    }
+
+    .movie-meta {
+        font-size: 0.9rem;
+        gap: 10px;
+        flex-wrap: wrap; /* Prevent cutting off */
+    }
+
+    .carousel-item img {
+        height: 60vh;
+    }
+}
+
+/* 2. Movie Cards scaling */
+@media (max-width: 576px) {
+    :root {
+        --card-width: 160px; /* Smaller cards on phones */
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+}
+
+/* 3. Date Scroller Fix */
+/* Ensure the dates scroll horizontally on tiny screens instead of squishing */
+@media (max-width: 480px) {
+    .date-scroll-wrapper .d-flex {
+        justify-content: flex-start !important;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .date-item {
+        min-width: 75px;
+    }
+}
+
+/* 4. Booking Container Padding */
+@media (max-width: 768px) {
+    .booking-glass-container {
+        padding: 30px 15px;
+        border-radius: 15px;
+    }
+}
+
+/* 5. Trailer Box */
+@media (max-width: 992px) {
+    .trailer-box {
+        margin-top: 30px;
+    }
+}
+
+
+/* Custom Profile Styles */
+.avatar-circle {
+    width: 90px;
+    height: 90px;
+    background: #0dcaf0;
+    color: #05080a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.stat-label { font-size: 0.7rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; }
+.stat-value { color: #0dcaf0; margin: 0; font-weight: 700; }
+
+.section-heading { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #0dcaf0; }
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.ticket-accent { border-left: 4px solid #0dcaf0; }
+
+.form-control-minimal {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 0 !important;
+    padding: 10px 0 !important;
+}
+
+.form-control-minimal:focus { border-color: #0dcaf0 !important; box-shadow: none !important; }
+
+.wishlist-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.empty-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+}

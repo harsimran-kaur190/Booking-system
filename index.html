@@ -36,26 +36,40 @@
 
 <body class="bg-dark text-white">
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top px-4">
-        <a class="navbar-brand fw-bold fs-3" href="index.html">Cine<span class="text-info">Pass</span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top px-lg-5 px-3 shadow-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold fs-3 transition-all" href="index.html">
+            Cine<span class="text-info">Pass</span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="details.html?id=27205">Movies</a></li>
-                <li class="nav-item"><a class="nav-link" href="details.html?id=27205#booking-section">Book Tickets</a></li>
-                <li class="nav-item"><a class="nav-link" href="theatres.html">Theatres</a></li>
-                <li class="nav-item"><a class="nav-link" href="wishlist.html">Wishlist</a></li>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active fw-medium" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="details.html?id=27205">Movies</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="details.html?id=27205#booking-section">Book Tickets</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="theatres.html">Theatres</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium" href="wishlist.html">Wishlist</a></li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2 bg-dark text-white border-secondary" type="search"
-                    placeholder="Search movies...">
-                <button class="btn btn-info" type="submit" id="search">Search</button>
-            </form>
+
+            <div class="d-flex align-items-center gap-2">
+                <form class="d-flex position-relative me-2 d-none d-md-flex">
+                    <input class="form-control bg-transparent text-white border-secondary rounded-pill ps-4 pe-5 search-input" 
+                           type="search" placeholder="Search movies..." style="width: 200px; font-size: 0.9rem;">
+                    <i class="bi bi-search position-absolute end-0 top-50 translate-middle-y me-3 text-secondary"></i>
+                </form>
+
+                <a href="profile.html" class="btn btn-outline-info rounded-pill d-flex align-items-center gap-2 px-3 py-1 border-0 profile-nav-btn" id="nav-user-name">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="fw-bold" style="font-size: 0.9rem;">Profile</span>
+                </a>
+            </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -71,8 +85,8 @@
                     <h1 class="display-3 fw-bold">THE DARK KNIGHT</h1>
                     <p class="fs-5 w-50 d-none d-md-block">When the menace known as the Joker wreaks havoc and chaos on the people of Gotham.</p>
                     <div class="mt-4">
-                        <a href="details.html?id=155#booking-section" class="btn btn-info btn-lg px-4 me-2">🎟️ Book Now</a>
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">View Trailer</a>
+                        <a href="details.html?id=155#booking-section" class="btn btn-info btn-lg px-4 me-2" style="margin-top: 0.5rem;">Book Now</a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4" style="margin-top: 0.5rem;">View Trailer</a>
                     </div>
                 </div>
             </div>
@@ -83,8 +97,8 @@
                     <h1 class="display-3 fw-bold">INTERSTELLAR</h1>
                     <p class="fs-5 w-50 d-none d-md-block">A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.</p>
                     <div class="mt-4">
-                        <a href="details.html?id=157336#booking-section" class="btn btn-info btn-lg px-4 me-2">🎟️ Book Now</a>
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">View Trailer</a>
+                        <a href="details.html?id=157336#booking-section" class="btn btn-info btn-lg px-4 me-2" style="margin-top: 0.5rem;">Book Now</a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4" style="margin-top: 0.5rem;">View Trailer</a>
                     </div>
                 </div>
             </div>
@@ -95,8 +109,8 @@
                     <h1 class="display-3 fw-bold">THE BATMAN</h1>
                     <p class="fs-5 w-50 d-none d-md-block">Unmask the truth. Batman uncovers corruption in Gotham City that connects to his own family.</p>
                     <div class="mt-4">
-                        <a href="details.html?id=414906#booking-section" class="btn btn-info btn-lg px-4 me-2">🎟️ Book Now</a>
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">View Trailer</a>
+                        <a href="details.html?id=414906#booking-section" class="btn btn-info btn-lg px-4 me-2" style="margin-top: 0.5rem;">Book Now</a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4" style="margin-top: 0.5rem;">View Trailer</a>
                     </div>
                 </div>
             </div>

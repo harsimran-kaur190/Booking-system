@@ -49,3 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(renderWishlist, 400); // Simulate network load
     }
 });
+
+
+function addToWishlist(movie) {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    
+    // The object must have 'poster_path' for the profile to show the image
+    const movieData = {
+        title: movie.title,
+        poster_path: `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+    };
+
+    wishlist.push(movieData);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}

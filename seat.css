@@ -1,105 +1,168 @@
+/* --- THEME VARIABLES --- */
 :root {
-    --bg-dark: #05080a;
     --accent: #00d4ff;
     --vip-gold: #ffcc00;
-    --seat-color: #1e262c;
-    --text-dim: #555;
+}
+
+.dark-theme {
+    --bg: #05080a;
+    --surface: #111b21;
+    --text: #ffffff;
+    --navbar: rgba(17, 27, 33, 0.95);
+    --seat-base: #1e272e;
+    --legend-bg: rgba(255, 255, 255, 0.05);
+}
+
+.light-theme {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --seat-base: #dee2e6;
+    --navbar: rgba(255, 255, 255, 0.95);
+    --legend-bg: #eeeeee;
 }
 
 body {
-    background: radial-gradient(circle at center, #111b21 0%, var(--bg-dark) 100%);
-    color: white;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.4s;
     font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding-bottom: 120px;
+    padding-top: 100px;
+    padding-bottom: 140px;
 }
 
-.movie-title { font-weight: 800; font-size: 3rem; letter-spacing: -1px; margin-bottom: 0; }
-
-/* --- Screen --- */
-.screen-wrapper { margin-bottom: 60px; perspective: 400px; }
-.screen-glow {
-    height: 8px; width: 60%; margin: 0 auto;
-    background: white; border-radius: 50%;
-    box-shadow: 0 10px 40px var(--accent);
-    transform: rotateX(-30deg);
-}
-.screen-label { color: var(--text-dim); font-size: 0.7rem; letter-spacing: 10px; margin-top: 15px; }
-
-/* --- Theater --- */
-.theater-container {
-    background: rgba(255,255,255,0.02);
-    padding: 40px; border-radius: 40px;
-    display: inline-block; border: 1px solid rgba(255,255,255,0.05);
+/* --- THEATER LAYOUT --- */
+.theater-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.seat-row { display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
-.row-label { width: 40px; font-weight: 800; color: var(--text-dim); font-size: 0.9rem; text-align: left; }
-.aisle { width: 40px; }
-
-/* --- RECLINER SEATS WITH NUMBERS --- */
-.seat {
-    width: 32px; 
-    height: 36px; 
-    margin: 3px;
-    background: var(--seat-color);
-    border-radius: 6px 6px 12px 12px;
-    cursor: pointer; 
-    position: relative;
-    transition: 0.2s; 
-    border: 1px solid rgba(255,255,255,0.05);
-    
-    /* Text Styling */
+.seat-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.2); /* Subdued until selected */
-    user-select: none;
 }
 
-/* Headrest shadow */
-.seat::after {
-    content: ''; position: absolute; top: 4px; left: 4px; right: 4px;
-    height: 10px; background: rgba(0,0,0,0.2); border-radius: 3px;
-    z-index: 0;
+.row-label {
+    width: 30px;
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 0.8rem;
 }
 
-.seat.available:hover { 
-    transform: scale(1.2); 
-    background: #333; 
-    color: white; 
+.aisle { width: 35px; }
+/* Ensure the Brand matches the theme text color */
+.navbar-brand {
+    color: var(--text) !important;
+    transition: color 0.4s;
 }
 
-.seat.selected { 
-    background: var(--accent) !important; 
-    box-shadow: 0 0 15px var(--accent); 
-    border: none; 
-    color: #000; /* Dark text on bright background */
+/* Optional: Make the theme icons more visible */
+.navbar .small {
+    color: var(--text);
 }
 
-.seat.occupied { 
-    background: #0a0a0a; 
-    opacity: 0.3; 
-    cursor: not-allowed; 
-    color: transparent; /* Hide numbers for occupied seats for cleaner look */
-    box-shadow: inset 0 2px 5px #000;
+/* Ensure the toggled state of the switch looks good in both modes */
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+/* --- SEAT STYLING --- */
+.seat {
+    width: 32px;
+    height: 36px;
+    margin: 3px;
+    background: var(--seat-base);
+    border-radius: 6px 6px 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: 0.2s;
+    color: rgba(128, 128, 128, 0.6);
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
-.vip-border { border-top: 3px solid var(--vip-gold) !important; }
+.vip-border {
+    border-bottom: 4px solid var(--vip-gold) !important;
+    height: 40px;
+    width: 36px;
+}
 
-/* --- Footer --- */
+.seat.selected {
+    background: var(--accent) !important;
+    box-shadow: 0 0 15px var(--accent);
+    color: #000 !important;
+    font-weight: bold;
+}
+
+.seat.occupied {
+    background: #1a1a1a !important;
+    opacity: 0.1;
+    cursor: not-allowed;
+    color: transparent;
+}
+
+.recliner-section { margin-top: 35px; }
+
+/* --- SCREEN & LEGEND --- */
+.screen-container { perspective: 500px; text-align: center; margin-bottom: 40px; }
+.screen-glow {
+    height: 6px; width: 55%; margin: 0 auto;
+    background: var(--text); border-radius: 50%;
+    box-shadow: 0 8px 30px var(--accent);
+}
+
+.legend-box {
+    background: var(--legend-bg);
+    padding: 12px 25px;
+    border-radius: 50px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+
+/* --- BOOKING BAR GRID --- */
 .booking-bar {
     position: fixed; bottom: 0; width: 100%;
-    background: rgba(10,15,20,0.96); backdrop-filter: blur(15px);
-    padding: 20px 0; border-top: 1px solid #222;
+    background: var(--navbar);
+    backdrop-filter: blur(15px);
+    padding: 20px 0;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    z-index: 1000;
 }
-.label { font-size: 0.65rem; color: #666; font-weight: 800; display: block; letter-spacing: 1px; }
-.amount { font-weight: 800; margin: 0; }
-.btn-pay {
-    background: var(--accent); color: black; border: none;
-    padding: 12px 40px; border-radius: 12px; font-weight: 800;
-    transition: 0.3s;
+
+.booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
 }
-.btn-pay:hover { background: white; transform: translateY(-2px); }
+
+#selected-seats-list {
+    font-size: 1.1rem;
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .booking-grid { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+    .action-section { text-align: center; }
+}
+
+.modal-content {
+    background: #0b1217 !important; /* Matches your dark theme */
+    border: 1px solid rgba(0, 212, 255, 0.3) !important;
+    backdrop-filter: blur(10px);
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
+    backdrop-filter: blur(5px);
+}
