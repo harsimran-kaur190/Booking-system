@@ -30,8 +30,11 @@ async function fetchActionMovies() {
   return await getData(`/discover/movie?with_genres=28&language=${CONFIG.LANGUAGE}`);
 }
 async function fetchMovieExtras(movieId) {
-  const res = await fetch(
-    `${CONFIG.BASE_URL}/movie/${movieId}?api_key=${CONFIG.API_KEY}&append_to_response=videos,credits`
-  );
-  return res.json();
+  // Use your built-in helper function to seamlessly inject the API_KEY and language!
+  return await getData(`/movie/${movieId}?append_to_response=videos,credits&language=${CONFIG.LANGUAGE}`);
+}
+async function searchMovies(query) {
+    // We pass the search endpoint relative to your BASE_URL, 
+    // and let your existing getData function handle the API_KEY for us!
+    return await getData(`/search/movie?query=${encodeURIComponent(query)}&include_adult=false`);
 }

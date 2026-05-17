@@ -15,6 +15,7 @@
     <script src="js/storage.js" defer></script>
     <script src="js/wishlist.js" defer></script>
     <script src="js/details.js" defer></script>
+    <script src="js/search.js" defer></script>
 </head>
 
 <body>
@@ -32,10 +33,10 @@
                 <li class="nav-item"><a class="nav-link" href="theatres.html">Theatres</a></li>
                 <li class="nav-item"><a class="nav-link" href="wishlist.html">Wishlist</a></li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2 bg-dark text-white border-secondary" type="search" placeholder="Search movies...">
-                <button class="btn btn-info" type="submit" id="search">Search</button>
-            </form>
+            <form class="d-flex" id="searchForm">
+    <input id="searchInput" class="form-control me-2 bg-dark text-white border-secondary" type="search" placeholder="Search movies..." required>
+    <button class="btn btn-info" type="submit" id="search">Search</button>
+</form>
         </div>
     </nav>
 
