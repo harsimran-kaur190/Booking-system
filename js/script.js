@@ -111,9 +111,6 @@ function updateBookingBar() {
 }
 
 // --- 6. BOOKING & MODAL LOGIC ---
-// ==========================================
-// 6. BOOKING & MODAL LOGIC (Optimized)
-// ==========================================
 const bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
 const btnPay = document.querySelector('.btn-pay');
 const btnConfirm = document.getElementById('confirm-purchase-btn'); // Ensure your modal's main button has this id
@@ -153,9 +150,10 @@ function confirmPurchase() {
         totalPrice: parseFloat(totalPrice)
     };
 
-    // 3. Save to unified local storage array for your profile dashboard
-    let bookings = JSON.parse(localStorage.getItem('myBookings')) || [];
+    // 3. Save to unified local storage array (Minimal Change: Added activeBookings mirroring for profile.js sync)
+    let bookings = JSON.parse(localStorage.getItem('activeBookings')) || JSON.parse(localStorage.getItem('myBookings')) || [];
     bookings.push(newBooking);
+    localStorage.setItem('activeBookings', JSON.stringify(bookings));
     localStorage.setItem('myBookings', JSON.stringify(bookings));
     
     // 4. Update the occupied map permanently so these seats show as "Sold out" on refresh!

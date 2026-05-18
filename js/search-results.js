@@ -49,9 +49,9 @@ if (!movie.id) return;
 
 // 2. Build your card markup safely
 const cardHTML = `
+    <!-- Added inline padding to force a large, custom gap -->
     <div class="col">
         <div class="card h-100 bg-transparent border-0 movie-card position-relative shadow-sm">
-            <!-- Ensure movie.id is cleanly inserted here without spaces -->
             <a href="details.html?id=${movie.id}" class="text-decoration-none text-white">
                 <div class="position-relative overflow-hidden rounded mb-2" style="aspect-ratio: 2/3;">
                     <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inception - CinePass</title>
+    <link rel="icon" type="image/png" href="./favicon.png?v=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -16,27 +17,77 @@
     <script src="js/wishlist.js" defer></script>
     <script src="js/details.js" defer></script>
     <script src="js/search.js" defer></script>
+     <style>
+        /* Custom Search Input Focus */
+        .search-input:focus {
+            background-color: #212529 !important;
+            color: white !important;
+            border-color: #0dcaf0 !important;
+            box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25) !important;
+        }
+
+        .navbar-nav .nav-link {
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #0dcaf0 !important;
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top px-4">
-        <a class="navbar-brand fw-bold fs-3" href="index.html">Cine<span class="text-info">Pass</span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top px-lg-5 px-3 shadow-lg" id="mainNavbar">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold fs-3 transition-all" href="index.html">
+                Cine<span class="text-info">Pass</span>
+            </a>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="#">Movies</a></li>
-                <li class="nav-item"><a class="nav-link" href="#booking-section">Book Tickets</a></li>
-                <li class="nav-item"><a class="nav-link" href="theatres.html">Theatres</a></li>
-                <li class="nav-item"><a class="nav-link" href="wishlist.html">Wishlist</a></li>
-            </ul>
-            <form class="d-flex" id="searchForm">
-    <input id="searchInput" class="form-control me-2 bg-dark text-white border-secondary" type="search" placeholder="Search movies..." required>
-    <button class="btn btn-info" type="submit" id="search">Search</button>
+            <!-- Mobile Menu Toggle Button -->
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links & Right-Side Actions -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <!-- Main Navigation Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-2">
+                    <li class="nav-item"><a class="nav-link active fw-medium" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="details.html?id=27205">Movies</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="details.html?id=27205#booking-section">Book
+                            Tickets</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="theatres.html">Theatres</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="wishlist.html">Wishlist</a></li>
+                </ul>
+
+                <!-- Search and Profile Section -->
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 mt-3 mt-lg-0">
+
+                    <!-- Search Bar -->
+                    <!-- Search Bar -->
+<form class="d-flex position-relative w-100" style="max-width: 250px;" id="searchForm">
+    <input
+        id="searchInput"
+        class="form-control bg-dark text-white border-secondary rounded-pill ps-4 pe-5 search-input"
+        type="search" placeholder="Search movies..." style="font-size: 0.9rem;" required>
+    <button type="submit"
+        class="btn position-absolute end-0 top-50 translate-middle-y text-secondary border-0 shadow-none px-3">
+        <i class="bi bi-search"></i>
+    </button>
 </form>
+                    <!-- Profile Button with Text -->
+                    <a href="profile.html"
+                        class="btn btn-outline-info rounded-pill d-flex align-items-center gap-2 px-4 py-1 transition-all">
+                        <i class="bi bi-person-circle fs-5 lh-1"></i>
+                        <span class="fw-medium" style="font-size: 0.95rem;" id="nav-user-name">Profile</span>
+                    </a>
+
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -93,63 +144,57 @@
     </div>
 
     <div class="container py-5 booking-glass-container" id="booking-section">
-        <div class="booking-header text-center mb-5">
-            <h2 class="display-6 fw-bold text-white mb-2">Reserve Your Seat</h2>
-            <p class="text-info opacity-75 small text-uppercase">Inception • Live at Cinemas</p>
-        </div>
+    <!-- Header Section -->
+    <div class="booking-header text-center mb-5">
+        <h2 class="display-6 fw-bold text-white mb-2">Reserve Your Seat</h2>
+        <p class="text-info opacity-75 small text-uppercase">Inception • Live at Cinemas</p>
+    </div>
 
-        <div class="date-scroll-wrapper mb-5">
-            <div class="d-flex justify-content-center gap-3">
-                <div class="date-item active"> <span class="month">MAR</span>
-                    <span class="num">14</span>
-                    <span class="day-name">Today</span>
-                </div>
-                <div class="date-item">
-                    <span class="month">MAR</span>
-                    <span class="num">15</span>
-                    <span class="day-name">Sun</span>
-                </div>
-                <div class="date-item">
-                    <span class="month">MAR</span>
-                    <span class="num">16</span>
-                    <span class="day-name">Mon</span>
-                </div>
-                <div class="date-item">
-                    <span class="month">MAR</span>
-                    <span class="num">17</span>
-                    <span class="day-name">Tue</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="venue-selection">
-            <div class="venue-group mb-4">
-                <p class="venue-label fw-bold text-white"><i class="bi bi-geo-alt-fill text-info me-2"></i>Grand Plaza Cinema</p>
-                <div class="time-grid d-flex gap-2 flex-wrap">
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">10:30 AM</a>
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">02:15 PM</a>
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">06:00 PM</a>
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">09:45 PM</a>
-                </div>
-            </div>
-            
-            <div class="venue-group">
-                <p class="venue-label fw-bold text-white"><i class="bi bi-geo-alt-fill text-info me-2"></i>Starlight Multiplex</p>
-                <div class="time-grid d-flex gap-2 flex-wrap">
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">11:00 AM</a>
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">04:30 PM</a>
-                    <a href="seat-selection.html" class="btn btn-outline-light btn-sm">09:00 PM</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-5">
-            <a href="seat-selection.html" class="btn btn-info btn-lg px-5 rounded-pill shadow">
-                <span>Proceed to Selection</span> <i class="bi bi-arrow-right"></i>
-            </a>
+    <!-- Dynamic Date Selection Wrapper -->
+    <div class="date-scroll-wrapper mb-5">
+        <div class="d-flex justify-content-center gap-3" id="date-container">
+            <!-- Dynamic calendar dates injected here via JS -->
         </div>
     </div>
 
+    <!-- Unified Venue Selection Block -->
+    <div class="venue-selection p-4 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-25 shadow-lg">
+        
+        <!-- Venue 1 -->
+        <div class="venue-group mb-4 pb-4 border-bottom border-secondary border-opacity-25">
+            <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
+                <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Grand Plaza Cinema
+            </p>
+            <div class="time-grid d-flex gap-2 flex-wrap">
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">10:30 AM</a>
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">02:15 PM</a>
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">06:00 PM</a>
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:45 PM</a>
+            </div>
+        </div>
+        
+        <!-- Venue 2 -->
+        <div class="venue-group">
+            <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
+                <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Starlight Multiplex
+            </p>
+            <div class="time-grid d-flex gap-2 flex-wrap">
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">11:00 AM</a>
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">04:30 PM</a>
+                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:00 PM</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CTA Button Block -->
+    <div class="text-center mt-5">
+        <a href="seat-selection.html" class="btn btn-info btn-lg px-5 py-2.5 rounded-pill shadow d-inline-flex align-items-center gap-2 transition-all fw-bold text-uppercase fs-6">
+            <span>Proceed to Selection</span> 
+            <i class="bi bi-arrow-right fs-5"></i>
+        </a>
+    </div>
+</div>
     <div class="container py-5">
         <h4 class="fw-bold mb-4">You might also like</h4>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
@@ -162,29 +207,33 @@
             </div>
     </div>
 
-    <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
-        <div class="container">
+     <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
+        <div class="container text-center text-md-start">
             <div class="row">
-                <div class="col-md-4 mt-3">
-                    <h5 class="text-uppercase fw-bold text-info">Cine<span class="text-white">Pass</span></h5>
-                    <p class="small text-secondary">Your ultimate destination for booking the latest blockbusters. Experience cinema like never before.</p>
-                </div>
-                <div class="col-md-2 mt-3">
-                    <h6 class="text-uppercase fw-bold text-info">Explore</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-secondary text-decoration-none">Home</a></li>
-                        <li><a href="#" class="text-secondary text-decoration-none">Movies</a></li>
-                    </ul>
-                </div>
                 <div class="col-md-3 mt-3">
-                    <h6 class="text-uppercase fw-bold text-info">Contact</h6>
-                    <p class="small text-secondary mb-1"><i class="bi bi-envelope-fill me-2"></i> support@CinePass.com</p>
-                    <p class="small text-secondary"><i class="bi bi-telephone-fill me-2"></i> +1 234 567 88</p>
+                    <h5 class="text-uppercase mb-4 fw-bold text-info">Cine<span class="text-white">Pass</span></h5>
+                    <p class="small text-secondary">Your ultimate destination for booking blockbusters. Experience
+                        cinema like never before.</p>
+                </div>
+                <div class="col-md-2 mt-3 mx-auto">
+                    <h6 class="text-uppercase mb-4 fw-bold text-info">Explore</h6>
+                    <p><a href="index.html" class="text-white text-decoration-none small">Home</a></p>
+                    <p><a href="details.html?id=27205" class="text-white text-decoration-none small">Movies</a></p>
+                    <p><a href="wishlist.html" class="text-white text-decoration-none small">Wishlist</a></p>
+                </div>
+                <div class="col-md-4 mt-3 text-secondary">
+                    <h6 class="text-uppercase mb-4 fw-bold text-info">Contact</h6>
+                    <p class="small"><i class="bi bi-house-door-fill me-2"></i> New York, NY 10012, US</p>
+                    <p class="small"><i class="bi bi-envelope-fill me-2"></i> support@CinePass.com</p>
                 </div>
             </div>
-            <hr class="my-4 border-secondary">
+            <hr class="mb-4">
             <div class="row align-items-center">
-                <p class="small text-secondary text-center">© 2026 Copyright: <strong class="text-info">CinePass.ai</strong></p>
+                <div class="col-md-7">
+                    <p class="small text-secondary text-center text-md-start">
+                        &copy; 2026 Copyright: <strong class="text-info">CinePass.ai</strong>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
@@ -192,13 +241,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         window.addEventListener('scroll', function () {
-            const nav = document.querySelector('.navbar');
+            const nav = document.getElementById('mainNavbar');
             if (window.scrollY > 50) {
-                nav.style.backgroundColor = '#05080a';
+                nav.style.background = 'rgba(5, 8, 10, 0.95)';
+                nav.style.backdropFilter = 'blur(10px)';
             } else {
-                nav.style.backgroundColor = 'transparent';
+                nav.style.background = 'linear-gradient(to bottom, rgba(15, 23, 30, 0.9), rgba(15, 23, 30, 0))';
+                nav.style.backdropFilter = 'none';
             }
         });
+
+        // Navbar transparent-to-solid scroll logic
+        window.addEventListener('scroll', function () {
+            const nav = document.getElementById('mainNavbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(5, 8, 10, 0.95)';
+                nav.style.backdropFilter = 'blur(10px)';
+            } else {
+                nav.style.background = 'linear-gradient(to bottom, rgba(15, 23, 30, 0.9), rgba(15, 23, 30, 0))';
+                nav.style.backdropFilter = 'none';
+            }
+        });
+
+        // Dynamic Showtimes Dates Generator
+        function generateBookingDates() {
+            const container = document.getElementById('date-container');
+            if (!container) return;
+
+            const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            let dateHTML = '';
+
+            for (let i = 0; i < 4; i++) {
+                const currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() + i);
+
+                const monthStr = months[currentDate.getMonth()];
+                const dateNum = currentDate.getDate();
+                const dayLabel = (i === 0) ? 'Today' : days[currentDate.getDay()];
+                const activeClass = (i === 0) ? 'active' : '';
+
+                dateHTML += `
+                    <div class="date-item ${activeClass}">
+                        <span class="month">${monthStr}</span>
+                        <span class="num">${dateNum}</span>
+                        <span class="day-name">${dayLabel}</span>
+                    </div>
+                `;
+            }
+            container.innerHTML = dateHTML;
+        }
+
+        // Run as soon as the DOM settles
+        document.addEventListener('DOMContentLoaded', generateBookingDates);
     </script>
 </body>
 </html>

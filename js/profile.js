@@ -121,7 +121,8 @@ function renderActiveBookings() {
                     <div class="col-md-6">
                         <div class="booking-card d-flex flex-column" data-booking-id="${booking.id}">
                             <div class="position-relative">
-                                <img src="${booking.poster}" alt="${booking.movieTitle}" 
+                                <!-- Minimal Change: Replaced strict booking.poster with safety check filtering out broken placeholders -->
+                                <img src="${booking.poster && !booking.poster.includes('placeholder') ? booking.poster : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" alt="${booking.movieTitle}" 
                                      style="height: 180px; width: 100%; object-fit: cover;">
                                 <div class="position-absolute top-0 end-0 m-2">
                                     <span class="badge bg-info text-dark shadow">
@@ -230,7 +231,8 @@ function showBookingDetails(bookingId) {
     document.getElementById('booking-details-content').innerHTML = `
         <div class="row g-4">
             <div class="col-md-5">
-                <img src="${booking.poster}" class="img-fluid rounded shadow" alt="${booking.movieTitle}" style="width: 100%; object-fit: cover;">
+                <!-- Minimal Change: Filter out placeholder images in details modal view as well -->
+                <img src="${booking.poster && !booking.poster.includes('placeholder') ? booking.poster : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" class="img-fluid rounded shadow" alt="${booking.movieTitle}" style="width: 100%; object-fit: cover;">
             </div>
             <div class="col-md-7">
                 <h4 class="fw-bold text-info mb-4">${booking.movieTitle}</h4>
