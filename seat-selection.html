@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="seat.css">
 </head>
+
 <body class="dark-theme">
-    
+
     <nav class="navbar navbar-expand-lg fixed-top px-4">
         <a class="navbar-brand fw-bold fs-3" href="#">Cine<span class="text-info">Pass</span></a>
         <div class="ms-auto d-flex align-items-center">
@@ -24,7 +26,7 @@
 
     <div class="container seat-page-wrapper">
         <div class="text-center mb-4">
-            <h1 class="movie-title fw-bold">INCEPTION</h1>
+            <h2 class="display-4 fw-bold text-white text-uppercase tracking-wide mb-1" id="booking-movie-title"></h2>
             <p class="subtitle text-uppercase opacity-50">Standard Rows (A-J) • Luxury Recliners (K-L)</p>
         </div>
 
@@ -34,15 +36,23 @@
         </div>
 
         <div class="legend-box d-flex justify-content-center gap-4 mb-5 shadow-sm">
-            <div class="legend-item"><div class="seat available"></div><span>Available</span></div>
-            <div class="legend-item"><div class="seat selected"></div><span>Selected</span></div>
-            <div class="legend-item"><div class="seat occupied"></div><span>Sold Out</span></div>
-            <div class="legend-item"><div class="seat available vip-border"></div><span>VIP Recliner</span></div>
+            <div class="legend-item">
+                <div class="seat available"></div><span>Available</span>
+            </div>
+            <div class="legend-item">
+                <div class="seat selected"></div><span>Selected</span>
+            </div>
+            <div class="legend-item">
+                <div class="seat occupied"></div><span>Sold Out</span>
+            </div>
+            <div class="legend-item">
+                <div class="seat available vip-border"></div><span>VIP Recliner</span>
+            </div>
         </div>
 
         <div class="theater-wrapper">
             <div id="seat-container" class="theater-grid">
-                </div>
+            </div>
         </div>
     </div>
 
@@ -66,37 +76,74 @@
         </div>
     </div>
     <div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark text-white border-info shadow-lg">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold">ORDER CONFIRMED</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body py-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <span class="opacity-75">Movie:</span>
-                    <span class="fw-bold text-info">INCEPTION</span>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border-info shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">ORDER CONFIRMED</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="d-flex justify-content-between mb-3">
-                    <span class="opacity-75">Selected Seats:</span>
-                    <span id="modal-seats" class="fw-bold text-info">-</span>
+                <div class="modal-body py-4">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="opacity-75">Movie:</span>
+                        <span id="modal-movie-title" class="fw-bold text-info"></span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="opacity-75">Selected Seats:</span>
+                        <span id="modal-seats" class="fw-bold text-info">-</span>
+                    </div>
+                    <hr class="opacity-25">
+                    <div class="d-flex justify-content-between fs-4">
+                        <span class="fw-bold">Total:</span>
+                        <span class="fw-bold text-info">$<span id="modal-total">0.00</span></span>
+                    </div>
                 </div>
-                <hr class="opacity-25">
-                <div class="d-flex justify-content-between fs-4">
-                    <span class="fw-bold">Total:</span>
-                    <span class="fw-bold text-info">$<span id="modal-total">0.00</span></span>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline-light w-100 py-3 fw-bold"
+                        data-bs-dismiss="modal">CANCEL</button>
+                    <button type="button" class="btn btn-info w-100 py-3 fw-bold shadow"
+                        onclick="confirmPurchase()">CONFIRM</button>
                 </div>
-            </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-outline-light w-100 py-3 fw-bold" data-bs-dismiss="modal">CANCEL</button>
-                <button type="button" class="btn btn-info w-100 py-3 fw-bold shadow" onclick="confirmPurchase()">CONFIRM</button>
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/storage.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js?v=999"></script>
+    <script>
+        // --- NEW: DYNAMIC TITLE INJECTION ON PAGE LOAD ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const dynamicTitleElement = document.getElementById('booking-movie-title');
+            if (dynamicTitleElement) {
+                // Read the dynamic movie choice out of storage, fallback to 'Selected Movie' if empty
+                const activeTitle = localStorage.getItem('cinepass_current_movie_title') || 'Selected Movie';
+                dynamicTitleElement.innerText = activeTitle;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Read the dynamic movie choice out of storage
+            const activeTitle = localStorage.getItem('cinepass_current_movie_title') || 'Selected Movie';
+            
+            // 1. Update the big header on the page
+            const dynamicTitleElement = document.getElementById('booking-movie-title');
+            if (dynamicTitleElement) {
+                dynamicTitleElement.innerText = activeTitle;
+            }
+
+            // 2. ULTIMATE CACHE BYPASS: Force the modal to update when "Book Tickets" is clicked
+            const btnPay = document.querySelector('.btn-pay');
+            const modalMovieEl = document.getElementById('modal-movie-title');
+            
+            if (btnPay && modalMovieEl) {
+                btnPay.addEventListener('click', () => {
+                    // This physically forces the movie title into the modal, ignoring old JS files!
+                    modalMovieEl.innerText = activeTitle;
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>

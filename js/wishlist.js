@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-body px-0 text-center">
                         <h6 class="text-white mb-1 fw-bold">${movie.title}</h6>
                         <p class="text-secondary small mb-2">${movie.genre} • ${movie.year}</p>
-                        <a href="details.html#booking-section" class="btn btn-info btn-sm w-100">🎟️ Book Now</a>
+                        <a href="details.html#booking-section" class="btn btn-info btn-sm w-100">Book Now</a>
                     </div>
                 </div>
             </div>

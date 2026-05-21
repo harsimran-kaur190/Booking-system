@@ -17,7 +17,7 @@
     <script src="js/wishlist.js" defer></script>
     <script src="js/details.js" defer></script>
     <script src="js/search.js" defer></script>
-     <style>
+    <style>
         /* Custom Search Input Focus */
         .search-input:focus {
             background-color: #212529 !important;
@@ -32,6 +32,13 @@
 
         .navbar-nav .nav-link:hover {
             color: #0dcaf0 !important;
+        }
+
+        footer a.text-white:hover {
+            color: #0dcaf0 !important;
+            text-shadow: 0 0 8px rgba(13, 202, 240, 0.4);
+            /* Optional: Adds a tiny neon glow to match your theme! */
+            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -69,16 +76,15 @@
 
                     <!-- Search Bar -->
                     <!-- Search Bar -->
-<form class="d-flex position-relative w-100" style="max-width: 250px;" id="searchForm">
-    <input
-        id="searchInput"
-        class="form-control bg-dark text-white border-secondary rounded-pill ps-4 pe-5 search-input"
-        type="search" placeholder="Search movies..." style="font-size: 0.9rem;" required>
-    <button type="submit"
-        class="btn position-absolute end-0 top-50 translate-middle-y text-secondary border-0 shadow-none px-3">
-        <i class="bi bi-search"></i>
-    </button>
-</form>
+                    <form class="d-flex position-relative w-100" style="max-width: 250px;" id="searchForm">
+                        <input id="searchInput"
+                            class="form-control bg-dark text-white border-secondary rounded-pill ps-4 pe-5 search-input"
+                            type="search" placeholder="Search movies..." style="font-size: 0.9rem;" required>
+                        <button type="submit"
+                            class="btn position-absolute end-0 top-50 translate-middle-y text-secondary border-0 shadow-none px-3">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
                     <!-- Profile Button with Text -->
                     <a href="profile.html"
                         class="btn btn-outline-info rounded-pill d-flex align-items-center gap-2 px-4 py-1 transition-all">
@@ -134,80 +140,94 @@
         </div>
 
         <div class="row mt-5">
-        <div class="col-12">
-            <h5 class="mb-4 fw-bold">Major Cast</h5>
-            <div id="cast-container" class="row g-4 text-center"></div>
+            <div class="col-12">
+                <h5 class="mb-4 fw-bold">Major Cast</h5>
+                <div id="cast-container" class="row g-4 text-center"></div>
+            </div>
         </div>
-        </div>
-        
+
         <hr class="my-5 border-secondary opacity-25">
     </div>
 
     <div class="container py-5 booking-glass-container" id="booking-section">
-    <!-- Header Section -->
-    <div class="booking-header text-center mb-5">
-        <h2 class="display-6 fw-bold text-white mb-2">Reserve Your Seat</h2>
-        <p class="text-info opacity-75 small text-uppercase">Inception • Live at Cinemas</p>
-    </div>
-
-    <!-- Dynamic Date Selection Wrapper -->
-    <div class="date-scroll-wrapper mb-5">
-        <div class="d-flex justify-content-center gap-3" id="date-container">
-            <!-- Dynamic calendar dates injected here via JS -->
+        <!-- Header Section -->
+        <div class="booking-header text-center mb-5">
+            <h2 class="display-6 fw-bold text-white mb-2">Reserve Your Seat</h2>
+            <p class="text-info opacity-75 small text-uppercase"><span id="dynamic-booking-title">Inception</span> •
+                Live at Cinemas</p>
         </div>
-    </div>
 
-    <!-- Unified Venue Selection Block -->
-    <div class="venue-selection p-4 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-25 shadow-lg">
-        
-        <!-- Venue 1 -->
-        <div class="venue-group mb-4 pb-4 border-bottom border-secondary border-opacity-25">
-            <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
-                <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Grand Plaza Cinema
-            </p>
-            <div class="time-grid d-flex gap-2 flex-wrap">
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">10:30 AM</a>
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">02:15 PM</a>
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">06:00 PM</a>
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:45 PM</a>
-            </div>
-        </div>
-        
-        <!-- Venue 2 -->
-        <div class="venue-group">
-            <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
-                <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Starlight Multiplex
-            </p>
-            <div class="time-grid d-flex gap-2 flex-wrap">
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">11:00 AM</a>
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">04:30 PM</a>
-                <a href="seat-selection.html" class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:00 PM</a>
+        <!-- Dynamic Date Selection Wrapper -->
+        <div class="date-scroll-wrapper mb-5">
+            <div class="d-flex justify-content-center gap-3" id="date-container">
+                <!-- Dynamic calendar dates injected here via JS -->
             </div>
         </div>
 
-    </div>
+        <!-- Unified Venue Selection Block -->
+        <div
+            class="venue-selection p-4 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-25 shadow-lg">
 
-    <!-- CTA Button Block -->
-    <div class="text-center mt-5">
-        <a href="seat-selection.html" class="btn btn-info btn-lg px-5 py-2.5 rounded-pill shadow d-inline-flex align-items-center gap-2 transition-all fw-bold text-uppercase fs-6">
-            <span>Proceed to Selection</span> 
-            <i class="bi bi-arrow-right fs-5"></i>
-        </a>
-    </div>
-</div>
-    <div class="container py-5">
-        <h4 class="fw-bold mb-4">You might also like</h4>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
-            <div class="col">
-                <div class="card bg-transparent border-0 text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/d/d6/Avatar_%282009_film%29_poster.jpg" class="card-img-top rounded shadow" alt="Avatar" style="height: 250px; object-fit: cover;">
-                    <p class="mt-2 small fw-bold">Avatar</p>
+            <!-- Venue 1 -->
+            <div class="venue-group mb-4 pb-4 border-bottom border-secondary border-opacity-25">
+                <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
+                    <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Grand Plaza Cinema
+                </p>
+                <div class="time-grid d-flex gap-2 flex-wrap">
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">10:30 AM</a>
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">02:15 PM</a>
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">06:00 PM</a>
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:45 PM</a>
                 </div>
             </div>
-            </div>
-    </div>
 
-     <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
+            <!-- Venue 2 -->
+            <div class="venue-group">
+                <p class="venue-label fw-bold text-white mb-3 d-flex align-items-center">
+                    <i class="bi bi-geo-alt-fill text-info me-2 fs-5"></i>Starlight Multiplex
+                </p>
+                <div class="time-grid d-flex gap-2 flex-wrap">
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">11:00 AM</a>
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">04:30 PM</a>
+                    <a href="seat-selection.html"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3 py-1.5 transition-all">09:00 PM</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA Button Block -->
+        <div class="text-center mt-5">
+            <a href="seat-selection.html"
+                class="btn btn-info btn-lg px-5 py-2.5 rounded-pill shadow d-inline-flex align-items-center gap-2 transition-all fw-bold text-uppercase fs-6">
+                <span>Proceed to Selection</span>
+                <i class="bi bi-arrow-right fs-5"></i>
+            </a>
+        </div>
+    </div>
+    <!-- You Might Also Like Section -->
+    <!-- You Might Also Like Section -->
+<div class="container mt-5 mb-5">
+    <h3 class="fw-bold mb-4 border-start border-info border-4 ps-2">You Might Also Like</h3>
+    
+    <!-- Empty grid where JS will inject the movies -->
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4" id="similar-movies-grid">
+        <!-- Spinner shows while loading -->
+        <div class="col-12 w-100 text-center text-secondary py-4" id="similar-loading">
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-secondary">
         <div class="container text-center text-md-start">
             <div class="row">
                 <div class="col-md-3 mt-3">
@@ -296,4 +316,5 @@
         document.addEventListener('DOMContentLoaded', generateBookingDates);
     </script>
 </body>
+
 </html>

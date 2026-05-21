@@ -4,14 +4,16 @@ const Storage = {
     },
     saveToWishlist: function(movie) {
         let wishlist = this.getWishlist();
-        if(!wishlist.some(m => m.id === movie.id)) {
+        // Safe string comparison to prevent duplicates
+        if(!wishlist.some(m => String(m.id) === String(movie.id))) {
             wishlist.push(movie);
             localStorage.setItem('cinepass_wishlist', JSON.stringify(wishlist));
         }
     },
     removeFromWishlist: function(movieId) {
         let wishlist = this.getWishlist();
-        wishlist = wishlist.filter(m => m.id !== movieId);
+        // Safe string comparison for deletion
+        wishlist = wishlist.filter(m => String(m.id) !== String(movieId));
         localStorage.setItem('cinepass_wishlist', JSON.stringify(wishlist));
     },
     
@@ -22,7 +24,8 @@ const Storage = {
     saveBooking: function(bookingData) {
         let bookings = this.getActiveBookings();
         const booking = {
-            id: Date.now(),
+            // FIXED: Now uses your luxury 'CP-' format instead of a raw timestamp
+            id: bookingData.id || "CP-" + Math.floor(100000 + Math.random() * 900000),
             movieTitle: bookingData.movieTitle,
             poster: bookingData.poster,
             date: bookingData.date || new Date().toLocaleDateString(),
@@ -38,7 +41,8 @@ const Storage = {
     },
     removeBooking: function(bookingId) {
         let bookings = this.getActiveBookings();
-        bookings = bookings.filter(b => b.id !== bookingId);
+        // FIXED: Safe string comparison ensures CP- IDs are caught and deleted successfully
+        bookings = bookings.filter(b => String(b.id) !== String(bookingId));
         localStorage.setItem('cinepass_active_bookings', JSON.stringify(bookings));
     },
     getTopWishlistItems: function(limit = 3) {

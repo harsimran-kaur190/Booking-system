@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadUserProfile() {
-    // Adding fallback empty array/object in case storage is empty during testing
     const user = Storage.getUserProfile() || { 
         name: "Guest User", avatar: "https://ui-avatars.com/api/?name=Guest+User&background=0D8ABC&color=fff&size=150", 
         email: "Not Set", phone: "Not Set", joinDate: "Today" 
@@ -18,38 +17,43 @@ function loadUserProfile() {
     document.getElementById('user-phone').textContent = user.phone;
     document.getElementById('user-join-date').textContent = user.joinDate;
     
-    const totalBookings = (Storage.getActiveBookings() || []).length;
+    // Read directly from your exact storage key for the top counter
+    const rawBookings = JSON.parse(localStorage.getItem('cinepass_active_bookings')) || [];
+    const totalBookings = rawBookings.length;
     const totalWishlist = (Storage.getWishlist() || []).length;
     
-    document.getElementById('stat-bookings').textContent = totalBookings;
-    document.getElementById('stat-wishlist').textContent = totalWishlist;
+    const statBookingsEl = document.getElementById('stat-bookings');
+    if (statBookingsEl) statBookingsEl.textContent = totalBookings;
+    
+    const statWishlistEl = document.getElementById('stat-wishlist');
+    if (statWishlistEl) statWishlistEl.textContent = totalWishlist;
 }
 
 function setupProfileEditModal() {
     const saveBtn = document.getElementById('save-profile-btn');
     const form = document.getElementById('edit-profile-form');
+    if (!saveBtn || !form) return;
+
     const user = Storage.getUserProfile() || {};
     
-    // Inputs
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
 
-    // Populate form with existing data
-    nameInput.value = user.name || '';
-    emailInput.value = user.email || '';
-    phoneInput.value = user.phone || '';
+    if (nameInput) nameInput.value = user.name || '';
+    if (emailInput) emailInput.value = user.email || '';
+    if (phoneInput) phoneInput.value = user.phone || '';
 
-    // Regex Patterns for Validation
-    const nameRegex = /^[a-zA-Z\s]{2,50}$/; // Letters and spaces only, 2-50 chars
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Standard email format
-    const phoneRegex = /^\+?[\d\s-]{10}$/; // Numbers, optional +, spaces or hyphens
+    const nameRegex = /^[a-zA-Z\s]{2,50}$/; 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    const phoneRegex = /^\+?[\d\s-]{10,15}$/;
 
-    // Clear validation styling when the user starts typing
     [nameInput, emailInput, phoneInput].forEach(input => {
-        input.addEventListener('input', () => {
-            input.classList.remove('is-invalid');
-        });
+        if(input) {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+            });
+        }
     });
     
     saveBtn.addEventListener('click', () => {
@@ -58,28 +62,23 @@ function setupProfileEditModal() {
         const emailVal = emailInput.value.trim();
         const phoneVal = phoneInput.value.trim();
 
-        // 1. Validate Name
         if (!nameRegex.test(nameVal)) {
             nameInput.classList.add('is-invalid');
             isValid = false;
         }
 
-        // 2. Validate Email
         if (!emailRegex.test(emailVal)) {
             emailInput.classList.add('is-invalid');
             isValid = false;
         }
 
-        // 3. Validate Phone
         if (!phoneRegex.test(phoneVal)) {
             phoneInput.classList.add('is-invalid');
             isValid = false;
         }
 
-        // If any validation failed, stop here
         if (!isValid) return; 
 
-        // If everything is valid, save to storage
         const updatedProfile = {
             name: nameVal,
             email: emailVal,
@@ -90,11 +89,12 @@ function setupProfileEditModal() {
         
         Storage.saveUserProfile(updatedProfile);
         
-        // Hide modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
-        modal.hide();
+        const modalEl = document.getElementById('editProfileModal');
+        if(modalEl) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if(modal) modal.hide();
+        }
         
-        // Reload UI
         loadUserProfile();
     });
 }
@@ -103,7 +103,7 @@ function renderActiveBookings() {
     const container = document.getElementById('active-bookings-container');
     if (!container) return;
 
-    const bookings = Storage.getActiveBookings() || [];
+    const bookings = JSON.parse(localStorage.getItem('cinepass_active_bookings')) || [];
 
     if (bookings.length === 0) {
         container.innerHTML = `
@@ -119,19 +119,18 @@ function renderActiveBookings() {
             <div class="row g-4">
                 ${bookings.map(booking => `
                     <div class="col-md-6">
-                        <div class="booking-card d-flex flex-column" data-booking-id="${booking.id}">
+                        <div class="booking-card d-flex flex-column h-100" data-booking-id="${booking.id}">
                             <div class="position-relative">
-                                <!-- Minimal Change: Replaced strict booking.poster with safety check filtering out broken placeholders -->
                                 <img src="${booking.poster && !booking.poster.includes('placeholder') ? booking.poster : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" alt="${booking.movieTitle}" 
-                                     style="height: 180px; width: 100%; object-fit: cover;">
+                                     style="height: 200px; width: 100%; object-fit: cover; object-position: center top;">
                                 <div class="position-absolute top-0 end-0 m-2">
                                     <span class="badge bg-info text-dark shadow">
-                                        <i class="bi bi-chair me-1"></i> ${booking.seats.length} Seats
+                                        <i class="bi bi-chair me-1"></i> ${booking.seats ? booking.seats.length : 0} Seats
                                     </span>
                                 </div>
                             </div>
                             <div class="p-3 d-flex flex-column flex-grow-1">
-                                <h6 class="fw-bold mb-2 fs-5">${booking.movieTitle}</h6>
+                                <h6 class="fw-bold mb-2 fs-5">${booking.movieTitle || 'Movie'}</h6>
                                 <div class="small text-secondary mb-3">
                                     <div class="mb-1"><i class="bi bi-calendar-event me-2 text-info"></i>${booking.date} at ${booking.time}</div>
                                     <div><i class="bi bi-geo-alt me-2 text-info"></i>${booking.venue}</div>
@@ -139,8 +138,8 @@ function renderActiveBookings() {
                                 <div class="mt-auto">
                                     <hr class="border-secondary opacity-50 my-2">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="small text-secondary text-truncate me-2" style="max-width: 150px;">Seats: ${booking.seats.join(', ')}</span>
-                                        <span class="text-info fw-bold">$${booking.totalPrice.toFixed(2)}</span>
+                                        <span class="small text-secondary text-truncate me-2" style="max-width: 150px;">Seats: ${booking.seats ? booking.seats.join(', ') : ''}</span>
+                                        <span class="text-info fw-bold">$${booking.totalPrice ? booking.totalPrice.toFixed(2) : '0.00'}</span>
                                     </div>
                                     <button class="btn btn-info btn-sm w-100 fw-bold view-details-btn" data-booking-id="${booking.id}">
                                         View Ticket
@@ -156,12 +155,12 @@ function renderActiveBookings() {
         document.querySelectorAll('.view-details-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                showBookingDetails(parseInt(e.currentTarget.getAttribute('data-booking-id')));
+                const bId = e.currentTarget.getAttribute('data-booking-id');
+                showBookingDetails(bId);
             });
         });
     }
     
-    // Trigger fade in animation AFTER content is loaded
     setTimeout(() => { container.style.opacity = '1'; }, 50);
 }
 
@@ -185,10 +184,10 @@ function renderTopWishlistItems() {
             <div class="row g-4">
                 ${topItems.map((movie, index) => `
                     <div class="col-md-6 col-lg-4">
-                        <div class="wishlist-card d-flex flex-column">
+                        <div class="wishlist-card d-flex flex-column h-100">
                             <div class="position-relative">
                                 <img src="${movie.poster}" alt="${movie.title}" 
-                                     style="height: 220px; width: 100%; object-fit: cover;">
+                                     style="height: 240px; width: 100%; object-fit: cover; object-position: center top;">
                             </div>
                             <div class="p-3 d-flex flex-column flex-grow-1">
                                 <h6 class="fw-bold mb-1 text-truncate">${movie.title}</h6>
@@ -213,70 +212,87 @@ function renderTopWishlistItems() {
                 e.preventDefault();
                 Storage.removeFromWishlist(e.currentTarget.getAttribute('data-id'));
                 renderTopWishlistItems();
-                loadUserProfile(); // Update the count in the sidebar
+                loadUserProfile(); 
             });
         });
     }
     
-    // Trigger fade in animation
     setTimeout(() => { container.style.opacity = '1'; }, 50);
 }
 
 function showBookingDetails(bookingId) {
-    const bookings = Storage.getActiveBookings() || [];
-    const booking = bookings.find(b => b.id === bookingId);
+    const bookings = JSON.parse(localStorage.getItem('cinepass_active_bookings')) || [];
+    const booking = bookings.find(b => String(b.id) === String(bookingId));
 
     if (!booking) return;
 
-    document.getElementById('booking-details-content').innerHTML = `
-        <div class="row g-4">
-            <div class="col-md-5">
-                <!-- Minimal Change: Filter out placeholder images in details modal view as well -->
-                <img src="${booking.poster && !booking.poster.includes('placeholder') ? booking.poster : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" class="img-fluid rounded shadow" alt="${booking.movieTitle}" style="width: 100%; object-fit: cover;">
-            </div>
-            <div class="col-md-7">
-                <h4 class="fw-bold text-info mb-4">${booking.movieTitle}</h4>
-                
-                <div class="d-flex align-items-center mb-3">
-                    <div class="bg-dark rounded p-2 border border-secondary text-center me-3" style="min-width: 60px;">
-                        <div class="small text-info text-uppercase fw-bold">${new Date(booking.date).toLocaleDateString('en-US', { month: 'short' })}</div>
-                        <div class="fs-4 fw-bold">${new Date(booking.date).getDate()}</div>
-                    </div>
-                    <div>
-                        <div class="fw-bold">${booking.time}</div>
-                        <div class="text-secondary small">${booking.venue}</div>
-                    </div>
-                </div>
+    const isDateValid = !isNaN(Date.parse(booking.date));
+    const monthText = isDateValid ? new Date(booking.date).toLocaleDateString('en-US', { month: 'short' }) : 'SHOW';
+    const dayText = isDateValid ? new Date(booking.date).getDate() : '•';
 
-                <div class="p-3 bg-dark rounded border border-secondary mb-3">
-                    <div class="row text-center">
-                        <div class="col-6 border-end border-secondary">
-                            <div class="small text-secondary mb-1">TICKETS</div>
-                            <div class="fw-bold">${booking.seats.length}</div>
+    const contentDiv = document.getElementById('booking-details-content');
+    if(contentDiv) {
+        contentDiv.innerHTML = `
+            <div class="row g-4">
+                <div class="col-md-5">
+                    <img src="${booking.poster && !booking.poster.includes('placeholder') ? booking.poster : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500&auto=format&fit=crop'}" class="img-fluid rounded shadow" alt="${booking.movieTitle}" style="height: 300px; width: 100%; object-fit: cover; object-position: center top;">
+                </div>
+                <div class="col-md-7">
+                    <h4 class="fw-bold text-info mb-4">${booking.movieTitle || 'Movie'}</h4>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-2 border border-secondary text-center me-3" style="min-width: 60px;">
+                            <div class="small text-info text-uppercase fw-bold">${monthText}</div>
+                            <div class="fs-4 fw-bold">${dayText}</div>
                         </div>
-                        <div class="col-6">
-                            <div class="small text-secondary mb-1">SEATS</div>
-                            <div class="fw-bold text-info">${booking.seats.join(', ')}</div>
+                        <div>
+                            <div class="fw-bold">${booking.time}</div>
+                            <div class="text-secondary small">${booking.venue}</div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-4">
-                    <span class="text-secondary">Total Paid</span>
-                    <span class="fs-4 fw-bold text-info">$${booking.totalPrice.toFixed(2)}</span>
+
+                    <div class="p-3 bg-dark rounded border border-secondary mb-3">
+                        <div class="row text-center">
+                            <div class="col-6 border-end border-secondary">
+                                <div class="small text-secondary mb-1">TICKETS</div>
+                                <div class="fw-bold">${booking.seats ? booking.seats.length : 0}</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="small text-secondary mb-1">SEATS</div>
+                                <div class="fw-bold text-info">${booking.seats ? booking.seats.join(', ') : ''}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-4">
+                        <span class="text-secondary">Total Paid</span>
+                        <span class="fs-4 fw-bold text-info">$${booking.totalPrice ? booking.totalPrice.toFixed(2) : '0.00'}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    }
 
-    document.getElementById('cancel-booking-btn').onclick = () => {
-        if (confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
-            Storage.removeBooking(bookingId);
-            bootstrap.Modal.getInstance(document.getElementById('bookingDetailsModal')).hide();
-            renderActiveBookings();
-            loadUserProfile(); // Update the count in the sidebar
-        }
-    };
+    const cancelBtn = document.getElementById('cancel-booking-btn');
+    if(cancelBtn) {
+        cancelBtn.onclick = () => {
+            if (confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
+                const updatedBookings = bookings.filter(b => String(b.id) !== String(bookingId));
+                localStorage.setItem('cinepass_active_bookings', JSON.stringify(updatedBookings));
+                
+                const modalEl = document.getElementById('bookingDetailsModal');
+                if(modalEl) {
+                    const modal = bootstrap.Modal.getInstance(modalEl);
+                    if(modal) modal.hide();
+                }
+                renderActiveBookings();
+                loadUserProfile(); 
+            }
+        };
+    }
 
-    new bootstrap.Modal(document.getElementById('bookingDetailsModal')).show();
+    const modalEl = document.getElementById('bookingDetailsModal');
+    if(modalEl) {
+        new bootstrap.Modal(modalEl).show();
+    }
 }
